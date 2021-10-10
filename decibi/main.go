@@ -7,27 +7,30 @@ import (
 
 func main() {
 	num := 0.625
+	decimalDegit := 3
+	shift := math.Pow10(decimalDegit)
 
-	remain := num
-	var res []bool
+	remain := num * shift
+	// var res []bool
 	for {
 		double := remain * 2
-		res = append(res, double >= 1)
 
-		_, frac := math.Modf(double)
-		remain = frac
+		// 切り捨て
+		val := math.Floor(double / shift)
 
-		fmt.Println(math.Floor(double))
-		fmt.Println(double)
-		if math.Floor(double) == double {
-			break
-		}
-		if len(res) > 5 {
+		fmt.Print(val)
+		remain = double - val*shift
+
+		// interger, frac := math.Modf(double)
+
+		// fmt.Println(interger)
+		// remain = math.Round(frac*100) / 100
+
+		if remain == 0 {
+			fmt.Println("break")
 			break
 		}
 	}
-
-	printBinary(res)
 }
 
 func printBinary(bs []bool) {
