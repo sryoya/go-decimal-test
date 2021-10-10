@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(floatToBiStr(0.1, 1))
+	printFloatAsBiStr(0.6, 1)
 	// num := 0.625      // 変換元の10進数
 	// decimalDigit := 3 // 10進数での小数の桁数
 
@@ -31,25 +31,27 @@ func main() {
 	// }
 }
 
-func floatToBiStr(v float64, digit int) string {
+func printFloatAsBiStr(v float64, digit int) {
 	// 整数にして計算する
 	shift := math.Pow10(digit)
 	remain := v * shift
-	res := "0."
+	fmt.Print("0.")
+	count := 0
 	for {
+		// 1. 2倍する
 		double := remain * 2
-
-		// 1桁目を取得する (その2進数での桁の値)
+		// 2. 1桁目を取得する (その2進数での桁の値)
 		val := math.Floor(double / shift)
-		res = fmt.Sprintf("%s%v", res, val)
-
-		// 1桁目を取り除く
+		fmt.Print(val)
+		// 3. 1桁目を取り除く
 		remain = double - val*shift
-
-		// 残りが0になったら終わり
+		// 残りが0になるまで1~3を繰り返す
 		if remain == 0 {
 			break
 		}
+		count++
+		if count > 100 {
+			break
+		}
 	}
-	return res
 }
